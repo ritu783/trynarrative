@@ -2,11 +2,11 @@
 # A list of individual tests to run.
 # Each item must include `id`.
 tests:
-  - id: "TEST-307"
-  - id: "TEST-308"
+  - id: "TEST-60"
+  - id: "TEST-63"
 # ────────────────────────────────────────────────
 # A list of test suites to run.
 # Same requirement: id is required.
 test_suites:
-  - id: "SUITE-5" 
-  - id: "SUITE-6"
+  - id: "SUITE-2" 
+  - id: "SUITE-3"
