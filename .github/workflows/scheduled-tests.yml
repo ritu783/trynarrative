@@ -1,0 +1,35 @@
+name: Scheduled Automation Tests
+
+on:
+  schedule:
+    - cron: '30 13 * * *'   # 2:00 AM IST
+  workflow_dispatch:        # allows manual run
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest --junitxml=results.xml
+
+      - name: Upload results to Narrative
+        run: |
+          curl -X POST https://api.trynarrative.com/test-results \
+          -H "Authorization: Bearer ${{ secrets.NARRATIVE_API_KEY }}" \
+          -F "file=@results.xml" \
+          -F "project=Nightly-Regression" \
+          -F "environment=staging"
